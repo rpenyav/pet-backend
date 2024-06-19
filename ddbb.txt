@@ -1,0 +1,112 @@
+
+patients: {
+    "_id": "ObjectId",
+    "nombre": "String",
+    "especie": "String",
+    "raza": "String",
+    "fecha_nacimiento": "Date",
+    "cliente_id": "ObjectId",
+    "historial_medico": [
+        {
+            "fecha": "Date",
+            "descripcion": "String",
+            "tratamiento": "String",
+            "medico_id": "ObjectId"
+        }
+    ],
+    "citas_proximas": [
+        "ObjectId"
+    ]
+}
+
+
+clients: {
+    "_id": "ObjectId",
+    "nombre": "String",
+    "contacto": "String",
+    "pacientes": [
+        "ObjectId"
+    ],
+    "citas_programadas": [
+        "ObjectId"
+    ]
+}
+
+doctors: {
+    "_id": "ObjectId",
+    "nombre": "String",
+    "especialidades": [
+        "String"
+    ],
+    "contacto": "String",
+    "candidaturas": [
+        {
+            "caso_id": "ObjectId",
+            "fecha": "Date",
+            "estado": "String" // (Pendiente, Aceptada, Rechazada)
+        }
+    ]
+}
+
+appointments: {
+    "_id": "ObjectId",
+    "paciente_id": "ObjectId",
+    "cliente_id": "ObjectId",
+    "fecha_hora": "Date",
+    "motivo": "String",
+    "estado": "String" // (Programada, Cancelada, Completada)
+}
+
+cases: {
+    "_id": "ObjectId",
+    "paciente_id": "ObjectId",
+    "descripcion": "String",
+    "fecha_creacion": "Date",
+    "estado": "String", // (Abierto, Asignado, Cerrado)
+    "candidaturas": [
+        {
+            "medico_id": "ObjectId",
+            "fecha": "Date",
+            "estado": "String" // (Pendiente, Aceptada, Rechazada)
+        }
+    ]
+}
+
+
+consultations: {
+    "_id": "ObjectId",
+    "paciente_id": "ObjectId",
+    "medico_id": "ObjectId",
+    "fecha_hora": "Date",
+    "descripcion": "String",
+    "tratamiento": "String",
+    "notas_adicionales": "String"
+}
+
+users: {
+    "_id": "ObjectId",
+    "nombre": "String",
+    "email": "String",
+    "rol": "String", // (Administrador, Médico, Cliente)
+    "password_hash": "String",
+    "fecha_creacion": "Date"
+}
+
+settings: {
+    "_id": "ObjectId",
+    "nombre_clinica": "String",
+    "direccion": "String",
+    "contacto": {
+        "telefono": "String",
+        "email": "String"
+    },
+    "horarios": {
+        "lunes": "08:00-20:00",
+        "martes": "08:00-20:00",
+        "miercoles": "08:00-20:00",
+        "jueves": "08:00-20:00",
+        "viernes": "08:00-20:00",
+        "sabado": "09:00-14:00",
+        "domingo": "Cerrado"
+    }
+}

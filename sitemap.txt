@@ -1,0 +1,47 @@
+1. Sitemap
+   El sitemap actualizado reflejará las funcionalidades específicas para médicos y clientes:
+
+Inicio
+
+Vista general
+Noticias y anuncios
+Pacientes (vista del médico)
+
+Lista de pacientes
+Detalles del paciente
+Información básica
+Historial médico
+Citas próximas
+Citas
+
+Lista de citas programadas (vista del cliente)
+Lista de casos disponibles (vista del médico)
+Programar nueva cita (vista del cliente)
+Detalles de la cita
+Candidaturas a casos (vista del médico)
+Asignación de casos (vista del administrador)
+Consultas
+
+Registro de consulta (vista del médico)
+Lista de consultas por paciente (vista del cliente)
+Detalles de la consulta
+Administración
+
+Gestión de usuarios
+Gestión de casos y candidaturas
+Configuración de la clínica
+Reportes y estadísticas
+Soporte
+
+Preguntas frecuentes
+Contacto
+
+Explicación
+Pacientes: Contiene información detallada de cada paciente (animal), incluyendo historial médico y próximas citas.
+Clientes: Información sobre los representantes humanos (clientes) de los pacientes, sus datos de contacto y citas programadas.
+Médicos: Información sobre los médicos y sus candidaturas a los casos disponibles.
+Citas: Registra las citas programadas con detalles del paciente y el cliente.
+Casos: Documenta los casos abiertos, asignados y cerrados, incluyendo candidaturas de médicos.
+Consultas: Documenta las consultas realizadas, incluyendo tratamientos y notas adicionales.
+Usuarios: Maneja los usuarios de la aplicación con roles específicos (Administrador, Médico, Cliente).
+Configuración: Guarda información de configuración de la clínica.
