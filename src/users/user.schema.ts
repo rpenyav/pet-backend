@@ -247,6 +247,10 @@ export class User {
   @IsString()
   phoneNumber: string;
 
+  @Prop({ required: false })
+  @IsString()
+  profilePic: string;
+
   @Prop({ required: true, unique: true })
   @IsEmail()
   email: string;
