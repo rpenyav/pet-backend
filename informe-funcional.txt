@@ -1,0 +1,173 @@
+A) Backend
+
+1. usuarios
+   1.1) deben llevar imagen
+   1.2) deben llevar historial, salvo los que tengan como rol "admin"
+   1.3) pueden ser rol doctor - los doctores son los unicos que pueden ver la lista de casos abiertos (no los cerrados) - los doctores pueden opositar a un caso expuesto en la lista de casos - los doctores pueden crear y tener acceso a los informes de diagnostico creados por ellos - los doctores pueden tener acceso a los informes de diagnostico asignados por el admin - los doctores tendrán una cartera de casos a los cuales hayan opositado y le hayan sido asignados (array de identificadores de casos) al margen de si estan abiertos o cerrados - los doctores pueden crear citas - cuando un doctor tenga un caso en cartera, podrá asignarle un informe de diagnostico a dicho caso o bien modificar los datos básicos - un doctor puede modificar un caso que tenga en cartera - un doctor puede modificar un informe de diagnostico que haya crea él mismo o bien que le haya sido asignado por el admin
+   1.4) pueden ser rol cliente - los clientes son personas identificadas con DNI, nombre, imagen, direccion, fecha de alta - los clientes deben tener al menos un paciente(animal) a su cargo - los pacientes son animales a cargo del cliente - un cliente puede tener más de un paciente animal a su cargo - los pacientes pueden tener numero de identificacion oficial, nombre, especie, raza, edad, numero de chip, fecha de alta, imagen
+   1.5) pueden ser rol admin - los admins pueden ver todo - los admins pueden crear usuarios cliente, usuarios doctor y usuarios admin - los admins pueden crear casos - los admins pueden crear citas - los admins pueden asignar y certificar finalmente un caso a uno de los doctores que hayan opositado, dichos casos quedarán en cartera del doctor. - los admins pueden asignar un informe de diagnostico a un doctor - los admins pueden borrar cualquier usuario, caso, informe diagnostico - los admins pueden modificar todo
+   1.6) deben tener un endpoint para cada caso, exceptuando los métodos "delete" que eliminar cualquiera
+   1.7) deben tener un endpoint único para mostrar los registros por ID
+   1.8) deben tener un endpoint unico que muestre el listado de todos los usuarios al margen de su rol
+   1.9) al realizar la autenticacion, el token generado DEBE llevar implicito el "sub" siendo este el identificador del usuario.
+
+2. casos
+
+- los casos son altas de paciente donde un primer vistazo determina qué doctores pueden llevarlo
+- los pacientes serán animales a cargo de un cliente, por lo que el titular del caso será el cliente y el paciente será el paciente(animal)
+- un mismo paciente(animal) podrá tener varios casos abiertos
+- un caso siempre tendrá de partida un paciente animal y su consecuente cliente asignados
+- los doctores pueden ver todos los casos siempre que esten abiertos o bien disponibles
+- los casos que ya han sido asignados a un doctor mediante el admin no estarán disponibles
+- los admins pueden ver todos los casos indistintamente de si estan abierto o cerrados
+- los admins deben y pueden crear los casos
+- los doctores pueden opositar a un caso
+- las oposiciones a un caso serán un array con el identificador del doctor que haya opositado
+- se pueden asignar informes de diagnostico a un caso, tantos como sea necesario
+- no se podrán asignar informes de diagnostico a un caso cerrado
+- los admins tomarán la decisión final de otorgar y asignar un caso a uno de los doctores que hayan opositado, entonces dicho caso pasará a entrar en cartera de ese doctor.
+- los casos tendrán un código para facturacion. Dicho codigo será otra coleccion donde se puedan añadir o modificar dichos codigos.
+
+3. informes de diagnostico
+
+   - deben tener un identificador de creador (normalmente un doctor o un admin)
+   - los abiertos deben poder verse desde su doctor o bien desde el admin
+   - los cerrados solamente se ven desde el admin
+   - los admin pueden asignar un informe a un doctor o a ninguno
+   - los informes de diagnostico pueden llevar el tratamiento o tratamientos (array)
+   - los informes deben asignarse a un caso existente
+   - los doctores pueden crear informes de diagnostico y asignarlos a un caso, siempre que tenga ese caso en cartera
+
+4. citas
+
+- las citas son emplazamientos creados por un doctor un cliente o un admin
+- si la cita la crea un cliente, no podrá asignar un caso, deberá hacerlo un doctor o un admin. El cliente solamente creará la petición de cita
+- las citas siempre llevarán un caso implícito, es obligado
+- las citas nunca podrán ser programadas en el pasado
+- las citas deben llevar un paciente implicito y su correspondiente cliente
+- las citas pueden ser presenciales, online o bien de traslado de doctor al sitio (granjas)
+
+5. codigos de facturacion
+
+- tendrán un codigo string
+- una descripcion
+- un importe por horas
+
+6. settings
+   (conservar lo existente)
+
+B) Frontend
+
+- un cliente podrá darse de alta (siempre como cliente), nunca como doctor o admin, los doctores los creará siempre el admin
+  · para darse de alta debe informar obligatoriamente de al menos un paciente animal con sus datos
+- un usuario piodrá identificarse
+- el token almacenado en cookies llevará implicito el sub siendo este el identificador
+- mediante dicho identificador obtendremos la data del usuario
+- segun el rol de usuario mostraremos una pantalla desktop y un menu de navegacion particular para cada rol 1) como rol doctor: mostraremos un listado de casos abiertos y disponibles para poder opositar a ellos - mostraremos la cartera de casos asignados a dicho doctor estén abiertos o cerrados - mostraremos las citas programadas por o para ese doctor. Las futuras, las actuales y las pasadas - podremos consultar los paciente animales indistintamente de si están en casos asignaods, abiertos o disponibles. También los clientes porpietarios de dicho animal 2) como rol cliente: podremos ver un listado de citas en las cuales el cliente esté involucrado, las pasadas, las presentes y las futuras - podremos ver los informes diagnosticos donde el cliente y su paciente esten involucrados, pero no podremos ver los casos - podremos consultar los pacientes (animales) en los que el cliente figure como propietario - podremos crear una peticion de cita 3) como rol admin: podremos hacer todo lo mencionado anteriormente: asignar casos a doctores, asignar informes diagnostico a doctores, crea y actualizar casos, crear y actualizar informes diagnostico, confirmar o modificar citas creadas por peticion desde el rol cliente, crear y actualizar codigos de facturacion, crear y actualizar doctores, clientes o admins, gestionar la configuración general (settings)
+
+
+
+
+informe de la IA
+
+         Informe Funcional para la Aplicación de Gestión Veterinaria
+
+  A) Backend
+  Usuarios
+  1.1) Deben llevar imagen.
+  1.2) Deben llevar historial, salvo los que tengan como rol "admin".
+  1.3) Roles de usuario:
+
+- Doctor:
+- Ver la lista de casos abiertos (no los cerrados).
+- Opositar a un caso expuesto en la lista de casos.
+- Crear y acceder a los informes de diagnóstico creados por ellos.
+- Acceder a los informes de diagnóstico asignados por el admin.
+- Tener una cartera de casos a los cuales hayan opositado y le hayan sido asignados (array de identificadores de casos), estén abiertos o cerrados.
+- Crear citas.
+- Asignar un informe de diagnóstico a un caso en su cartera o modificar los datos básicos del caso.
+- Modificar un caso en su cartera.
+- Modificar un informe de diagnóstico que hayan creado o que les haya sido asignado por el admin.
+- Cliente:
+- Personas identificadas con DNI, nombre, imagen, dirección y fecha de alta.
+- Deben tener al menos un paciente (animal) a su cargo.
+- Pueden tener más de un paciente a su cargo.
+- Admin:
+- Ver todo.
+- Crear usuarios cliente, doctor y admin.
+- Crear casos.
+- Crear citas.
+- Asignar y certificar un caso a uno de los doctores que hayan opositado, quedando en cartera del doctor.
+- Asignar un informe de diagnóstico a un doctor.
+- Borrar cualquier usuario, caso o informe diagnóstico.
+- Modificar todo.
+  1.4) Endpoints:
+- Crear, leer, actualizar y eliminar (excepto los métodos "delete" que eliminan cualquiera).
+- Mostrar los registros por ID.
+- Mostrar el listado de todos los usuarios al margen de su rol.
+- Al realizar la autenticación, el token generado DEBE llevar implícito el "sub", siendo este el identificador del usuario.
+
+Casos
+
+Altas de paciente donde un primer vistazo determina qué doctores pueden llevarlo.
+Asociados siempre a un paciente (animal) y a su consecuente cliente.
+Un mismo paciente puede tener varios casos abiertos.
+Los doctores pueden ver todos los casos abiertos o disponibles.
+Los casos asignados a un doctor no estarán disponibles para otros doctores.
+Los admins pueden ver y crear todos los casos indistintamente de su estado (abierto o cerrado).
+Las oposiciones a un caso serán un array con el identificador del doctor que haya opositado.
+Se pueden asignar informes de diagnóstico a un caso, tantos como sea necesario.
+No se pueden asignar informes de diagnóstico a un caso cerrado.
+Los admins deciden y asignan un caso a uno de los doctores que hayan opositado, entrando en cartera de ese doctor.
+Tendrán un código para facturación, que será otra colección donde se puedan añadir o modificar dichos códigos.
+Informes de Diagnóstico
+
+Identificador de creador (doctor o admin).
+Abiertos deben poder verse desde su doctor o admin.
+Cerrados solo se ven desde el admin.
+Admin puede asignar un informe a un doctor o a ninguno.
+Pueden llevar tratamiento o tratamientos (array).
+Deben asignarse a un caso existente.
+Los doctores pueden crear informes de diagnóstico y asignarlos a un caso en su cartera.
+Citas
+
+Pueden ser creadas por un doctor, un cliente (como solicitud) o un admin.
+Siempre llevarán un caso implícito y deben programarse en el futuro.
+Deben llevar un paciente y su correspondiente cliente.
+Pueden ser presenciales, online o de traslado de doctor al sitio (granjas).
+Códigos de Facturación
+
+Código string.
+Descripción.
+Importe por horas.
+Settings
+
+Mantener la configuración existente.
+B) Frontend
+Registro y Autenticación
+
+Los clientes pueden registrarse, incluyendo al menos un paciente.
+El token de autenticación incluirá el ID del usuario (sub) y se almacenará en cookies.
+Mediante dicho identificador se obtendrá la data del usuario.
+Pantallas según Rol
+
+Doctor:
+Listado de casos abiertos y disponibles para opositar.
+Cartera de casos asignados (abiertos o cerrados).
+Citas programadas por o para ese doctor (futuras, actuales y pasadas).
+Consultar pacientes (animales) y sus propietarios.
+Cliente:
+Listado de citas (pasadas, presentes y futuras).
+Informes diagnósticos donde el cliente y su paciente estén involucrados (sin ver los casos).
+Consultar pacientes a su cargo.
+Crear solicitud de cita.
+Admin:
+Gestionar usuarios, casos, citas, informes diagnósticos, códigos de facturación y configuraciones.
+Asignar casos a doctores.
+Asignar informes diagnósticos a doctores.
+Crear y actualizar casos, informes diagnósticos, citas, doctores, clientes y admins.
+Conclusión
+Esta estructura es viable y asegura una clara separación de roles y permisos. La autenticación y autorización son fundamentales y deben manejarse cuidadosamente para asegurar la seguridad y funcionalidad de la aplicación.
+
+Próximos Pasos
+Podemos empezar con la configuración del backend, enfocándonos en la creación de usuarios y la autenticación. Posteriormente, implementaremos la gestión de casos, informes diagnósticos, citas y códigos de facturación. En paralelo, desarrollaremos el frontend para alinearlo con las vistas y la lógica de negocio definidas.

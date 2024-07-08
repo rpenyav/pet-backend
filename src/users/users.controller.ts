@@ -2,79 +2,80 @@ import {
   Controller,
   Get,
   Post,
-  Body,
   Put,
-  Param,
   Delete,
+  Param,
+  Body,
   Query,
-  BadRequestException,
-  NotFoundException,
   UseGuards,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { CreateUserDto, UpdateUserDto } from './user.dto';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post()
+  @UseGuards(JwtAuthGuard)
   async create(@Body() createUserDto: CreateUserDto) {
-    try {
-      return await this.usersService.create(createUserDto);
-    } catch (error) {
-      throw new BadRequestException('Error creating user');
-    }
+    return this.usersService.create(createUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
+  @UseGuards(JwtAuthGuard)
   async findAll(
-    @Query('page') page: number = 1,
-    @Query('pageSize') pageSize: number = 10,
+    @Query('page') page: number,
+    @Query('pageSize') pageSize: number,
   ) {
     return this.usersService.findAll(page, pageSize);
   }
 
+  @Get('filter')
   @UseGuards(JwtAuthGuard)
+  async filter(
+    @Query('term') term: string,
+    @Query('page') page: number,
+    @Query('pageSize') pageSize: number,
+  ) {
+    return this.usersService.filterUsers(term, page, pageSize);
+  }
+
   @Get(':id')
-  async findById(@Param('id') id: string) {
-    try {
-      return await this.usersService.findById(id);
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw new NotFoundException(error.message);
-      }
-      throw new BadRequestException('Error finding user');
-    }
+  @UseGuards(JwtAuthGuard)
+  async findOne(@Param('id') id: string) {
+    return this.usersService.findOne(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    try {
-      return await this.usersService.update(id, updateUserDto);
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw new NotFoundException(error.message);
-      }
-      throw new BadRequestException('Error updating user');
-    }
+    return this.usersService.update(id, updateUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  async delete(@Param('id') id: string) {
-    try {
-      return await this.usersService.delete(id);
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw new NotFoundException(error.message);
-      }
-      throw new BadRequestException('Error deleting user');
-    }
+  @UseGuards(JwtAuthGuard)
+  async remove(@Param('id') id: string) {
+    return this.usersService.remove(id);
+  }
+
+  @Post('login')
+  async login(
+    @Body('email') email: string,
+    @Body('password') password: string,
+  ) {
+    return this.usersService.login(email, password);
+  }
+
+  @Post('renew')
+  async renew(@Body('token') token: string) {
+    return this.usersService.renew(token);
+  }
+
+  @Post('search')
+  @UseGuards(JwtAuthGuard)
+  async search(@Body() searchDto: any) {
+    return this.usersService.search(searchDto);
   }
 }

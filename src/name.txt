@@ -1,0 +1,65 @@
+
+Nombre: string
+Apellido: string
+Fecha de Nacimiento: date
+Teléfono: string
+Correo Electrónico: string
+password: string
+role: [Doctor/Paciente/Admin] <!---ENUM??-->
+Fecha de alta: date
+address: [{
+    street: string,
+    city: string,
+    state: string,
+    zip: string,
+    country: string
+    
+}]
+
+Estado Civil: [Soltero/Casado/Otro] <---ENUM??
+Nacionalidad: string
+
+Número de Licencia: string
+Especialidad: [{Nombre de la Especialidad, Año de Especialización}]
+Años de Experiencia: number
+
+Grado: [{Institución, Título Obtenido, Año de Graduación}]
+Posgrado: [{Institución, Título Obtenido, Año de Graduación}]
+Doctorado: [{Institución, Título Obtenido, Año de Graduación}]
+Certificaciones: [{Nombre de la Certificación, Institución, Año de Obtención}]
+
+Áreas de Interés: [{Áreas de Interés}]
+Idiomas: [{Idiomas Hablados,Nivel}]
+Experiencia Laboral:[{Nombre de la Clínica/Empresa, Cargo, Duración, Descripción de Responsabilidades}]
+
+Proyectos Destacados:
+[{Nombre del Proyecto, Descripción, Año, Resultados}]
+
+
+Artículos Publicados:
+[{Título del Artículo, Revista/Medio, Fecha de Publicación}]
+
+Investigaciones en Curso:
+[{Título de la Investigación, Descripción, Fecha de Inicio}]
+
+Asociaciones Profesionales:
+[{Nombre de la Asociación, Cargo, Duración}]
+
+Conferencias y Seminarios:
+[{Nombre de la Conferencia, Lugar, Fecha}]
+
+Ponencias y Talleres Impartidos:
+[{Nombre del Taller/Ponencia, Lugar, Fecha, Descripción}]
+
+
+Días y Horarios Disponibles: [{Días y Horarios}]
+Referencias: [{Nombre, Cargo, Contacto}]
+
+
+Habilidades Técnicas: [{Descripción de habilidades técnicas}]
+Habilidades Interpersonales: [{Descripción de habilidades interpersonales}]
+Notas Adicionales:[{Cualquier información adicional relevante}]
+
+historial:[{
+    fecha: date,
+    evento: Descripción del Evento}]
