@@ -17,8 +17,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  @UseGuards(JwtAuthGuard)
+  @Post('register')
   async create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
@@ -28,8 +27,10 @@ export class UsersController {
   async findAll(
     @Query('page') page: number,
     @Query('pageSize') pageSize: number,
+    @Query('sortBy') sortBy?: string,
+    @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc',
   ) {
-    return this.usersService.findAll(page, pageSize);
+    return this.usersService.findAll(page, pageSize, sortBy, sortOrder);
   }
 
   @Get('filter')
@@ -38,8 +39,16 @@ export class UsersController {
     @Query('term') term: string,
     @Query('page') page: number,
     @Query('pageSize') pageSize: number,
+    @Query('sortBy') sortBy?: string,
+    @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc',
   ) {
-    return this.usersService.filterUsers(term, page, pageSize);
+    return this.usersService.filterUsers(
+      term,
+      page,
+      pageSize,
+      sortBy,
+      sortOrder,
+    );
   }
 
   @Get(':id')
@@ -77,5 +86,42 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   async search(@Body() searchDto: any) {
     return this.usersService.search(searchDto);
+  }
+
+  @Put(':id/:arrayName/:itemId')
+  @UseGuards(JwtAuthGuard)
+  async updateArrayItem(
+    @Param('id') userId: string,
+    @Param('arrayName') arrayName: string,
+    @Param('itemId') itemId: string,
+    @Body() updateData: any,
+  ) {
+    return this.usersService.updateArrayItem(
+      userId,
+      arrayName,
+      itemId,
+      updateData,
+    );
+  }
+
+  // Nuevo endpoint para agregar un nuevo elemento a un array dentro de un usuario
+  @Put(':id/:arrayName')
+  @UseGuards(JwtAuthGuard)
+  async addArrayItem(
+    @Param('id') userId: string,
+    @Param('arrayName') arrayName: string,
+    @Body() newItem: any,
+  ) {
+    return this.usersService.addArrayItem(userId, arrayName, newItem);
+  }
+
+  @Delete(':id/:arrayName/:itemId')
+  @UseGuards(JwtAuthGuard)
+  async removeArrayItem(
+    @Param('id') userId: string,
+    @Param('arrayName') arrayName: string,
+    @Param('itemId') itemId: string,
+  ) {
+    return this.usersService.removeArrayItem(userId, arrayName, itemId);
   }
 }

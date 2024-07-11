@@ -1,5 +1,7 @@
+// user.schema.ts
+
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 import {
   IsEnum,
   IsEmail,
@@ -13,7 +15,7 @@ export type UserDocument = User & Document;
 
 export enum Role {
   Doctor = 'Doctor',
-  Paciente = 'Paciente',
+  Cliente = 'Cliente',
   Admin = 'Admin',
 }
 
@@ -25,206 +27,248 @@ export enum CivilStatus {
 
 @Schema()
 export class Address {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsString()
   street: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   city: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   state: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   zip: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   country: string;
 }
 
 @Schema()
 export class Specialization {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsString()
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsNumber()
   year: number;
 }
 
 @Schema()
 export class Degree {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsString()
   institution: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   degree: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsNumber()
   year: number;
 }
 
 @Schema()
 export class Certification {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsString()
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   institution: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsNumber()
   year: number;
 }
 
 @Schema()
 export class Experience {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsString()
   companyName: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   role: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   duration: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   description: string;
 }
 
 @Schema()
 export class PublishedArticle {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsString()
   title: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   journal: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsDate()
   date: Date;
 }
 
 @Schema()
 export class OngoingResearch {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsString()
   title: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   description: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsDate()
   startDate: Date;
 }
 
 @Schema()
 export class Association {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsString()
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   role: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   duration: string;
 }
 
 @Schema()
 export class Conference {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsString()
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   location: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsDate()
   date: Date;
 }
 
 @Schema()
 export class Workshop {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsString()
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   location: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsDate()
   date: Date;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   description: string;
 }
 
 @Schema()
 export class Availability {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsString()
   day: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   time: string;
 }
 
 @Schema()
 export class Reference {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsString()
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   position: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   contact: string;
 }
 
 @Schema()
 export class Skill {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsString()
   description: string;
 }
 
 @Schema()
 export class EventHistory {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ required: false })
   @IsDate()
   date: Date;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   eventDescription: string;
 }
@@ -263,7 +307,7 @@ export class User {
   @IsString()
   dni: string;
 
-  @Prop({ required: true, enum: Role })
+  @Prop({ required: false, enum: Role })
   @IsEnum(Role)
   role: Role;
 
@@ -271,103 +315,103 @@ export class User {
   @IsDate()
   registrationDate: Date;
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Address] })
   @IsArray()
   address: Address[];
 
-  @Prop({ required: true, enum: CivilStatus })
+  @Prop({ required: false, enum: CivilStatus })
   @IsEnum(CivilStatus)
   civilStatus: CivilStatus;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   nationality: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   licenseNumber: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Specialization] })
   @IsArray()
   specialization: Specialization[];
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsNumber()
   yearsOfExperience: number;
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Degree] })
   @IsArray()
   degree: Degree[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Degree] })
   @IsArray()
   postgraduate: Degree[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Degree] })
   @IsArray()
   doctorate: Degree[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Certification] })
   @IsArray()
   certifications: Certification[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Skill] })
   @IsArray()
   areasOfInterest: Skill[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Skill] })
   @IsArray()
   languages: Skill[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Experience] })
   @IsArray()
   workExperience: Experience[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Experience] })
   @IsArray()
   featuredProjects: Experience[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [PublishedArticle] })
   @IsArray()
   publishedArticles: PublishedArticle[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [OngoingResearch] })
   @IsArray()
   ongoingResearch: OngoingResearch[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Association] })
   @IsArray()
   professionalAssociations: Association[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Conference] })
   @IsArray()
   conferencesAndSeminars: Conference[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Workshop] })
   @IsArray()
   workshopsAndLectures: Workshop[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Availability] })
   @IsArray()
   availability: Availability[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Reference] })
   @IsArray()
   references: Reference[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Skill] })
   @IsArray()
   technicalSkills: Skill[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Skill] })
   @IsArray()
   interpersonalSkills: Skill[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [Skill] })
   @IsArray()
   additionalNotes: Skill[];
 
-  @Prop({ required: true })
+  @Prop({ required: false, type: [EventHistory] })
   @IsArray()
   eventHistory: EventHistory[];
 }
